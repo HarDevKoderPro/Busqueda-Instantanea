@@ -14,7 +14,7 @@ html {
 
 /* Configuracion del Body */
 body {
-  background: whitesmoke;
+  background: azure;
   font-size: 100%;
 
   .container {
@@ -27,7 +27,7 @@ body {
     flex-direction: column;
     gap: 8px;
     align-items: center;
-    background: rgb(176, 184, 180);
+    background: white;
 
     .tituloPrincipal {
       font-size: 1.2em;
