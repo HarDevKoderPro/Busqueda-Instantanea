@@ -1,8 +1,3 @@
-/* 
-- Permite realizar busqueda de palabras a medida que se van
-  ingresando letras en el input
-*/
-
 // Activar modo estricto
 "use strict";
 
