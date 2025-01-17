@@ -1,55 +1,50 @@
-// Activar modo estricto
 "use strict";
 
-// Referencio los elementos del DOM
-const doQueSel = (selector) => document.querySelector(selector);
-const inputBusqueda = doQueSel(".inputBusqueda");
-const spanResultados = doQueSel(".spanResultados");
+// Referencias de los elementos del DOM
+const getEl = (id) => document.getElementById(id);
+const inputBusqueda = getEl("inputBusqueda");
+const spanResultados = getEl("spanResultados");
 
 // variables Globales
 let datosFiltrados = [];
 const datos = [
-  { nombre: "Juan", edad: 23, ciudad: "Medellin" },
-  { nombre: "Pedro", edad: 25, ciudad: "Bogotá" },
-  { nombre: "Maria", edad: 22, ciudad: "Cali" },
-  { nombre: "Melissa", edad: 28, ciudad: "Medellin" },
-  { nombre: "Julio", edad: 33, ciudad: "Bucaramanga" },
+  { nombre: "juan", edad: 23, ciudad: "Medellin" },
+  { nombre: "pedro", edad: 25, ciudad: "Bogotá" },
+  { nombre: "patricia", edad: 28, ciudad: "New York" },
+  { nombre: "maria", edad: 22, ciudad: "Cali" },
+  { nombre: "melissa", edad: 28, ciudad: "Medellin" },
+  { nombre: "julio", edad: 33, ciudad: "Bucaramanga" },
 ];
 
 // Funcion que realiza la busqueda
-function busquedaInstantanea() {
-  // Capturo palabra a filtrar
-  let busqueda =
-    inputBusqueda.value.charAt(0).toUpperCase() +
-    inputBusqueda.value.split("").splice(1).join("").toLowerCase();
-  // no muestro datos si input busqueda esta vacio
-  if (busqueda === "") {
-    datosFiltrados = [];
+const busquedaInstantanea = () => {
+  let resultados = "";
+  if (inputBusqueda.value === "") {
+    resultados = "";
   } else {
-    datosFiltrados = datos.filter((dato) => dato.nombre.startsWith(busqueda));
-  }
+    let texto = inputBusqueda.value //Capturo texto
+      .trim() //Elimino espacios antes y despues
+      .toLowerCase(); //Convierto a minusculas
 
-  // Si no hay coincidencias no muestra datos
-  if (datosFiltrados.length === 0) {
-    spanResultados.innerHTML = "<p>No se encontraron resultados</p>";
-  } else {
-    // Formateo los datos filtrados
-    let resultados = "";
-    datosFiltrados.forEach((dato) => {
-      resultados += `<p>
-      Nombre: ${dato.nombre}<br>
-      Edad: ${dato.edad}<br>
-      Ciudad: ${dato.ciudad}
-      </p><br>`;
-      // Si no hay resultados, mostrar mensaje vacío
-      if (datosFiltrados.length === 0) {
-        resultados = "<p>No se encontraron resultados</p>";
-      }
-      console.log(datosFiltrados);
-      // Muestro los resultados en el span
-      spanResultados.innerHTML = resultados;
+    // Filtro datos a medida que se va digitando en el input
+    let datosFiltrados = datos.filter((dato) => dato.nombre.startsWith(texto));
+
+    // Guardo datos filtrados para mostrarlos
+    resultados = "";
+    datosFiltrados.forEach((item) => {
+      resultados += `
+        Nombre: ${item.nombre}<br>
+        Edad: ${item.edad}<br>
+        Ciudad: ${item.ciudad}
+      </br></br>
+    `;
     });
   }
-}
 
-inputBusqueda.addEventListener("input", busquedaInstantanea);
+  return resultados;
+};
+
+// Ejecucion de la busqueda al tipear en el input
+inputBusqueda.addEventListener("input", () => {
+  spanResultados.innerHTML = busquedaInstantanea();
+});
